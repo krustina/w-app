@@ -1,56 +1,40 @@
-import React, { useState } from "react";
 import "./App.css";
-import Input from "../src/components/Input";
-import WeatherData from "../src/components/WeatherData";
-import { API_KEY } from "./apis/config";
+import React, { useEffect, useState } from "react";
+import Weather from "./components/Weather";
+import { REACT_APP_API_URL, REACT_APP_API_KEY } from "./api/config";
 
-function App() {
-  const [weather, setWeather] = useState([]);
+export default function App() {
+  const [lat, setLat] = useState([]);
+  const [long, setLong] = useState([]);
+  const [data, setData] = useState([]);
 
-  async function fetchData(e) {
-    const city = e.target.elements.city.value;
-    const country = e.target.elements.country.value;
-    e.preventDefault();
-    const apiData = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&APPID=${API_KEY}`
-    )
-      .then((res) => res.json())
-      .then((data) => data);
-    if (city && country) {
-      setWeather({
-        data: apiData,
-        city: apiData.city,
-        country: apiData.sys.country,
-        description: apiData.weather[0].description,
-        temperature: (apiData.main.temp - 273.15).toFixed(2),
-        error: "",
+  useEffect(() => {
+    const fetchData = async () => {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        setLat(position.coords.latitude);
+        setLong(position.coords.longitude);
       });
-    } else {
-      setWeather({
-        data: "",
-        city: "",
-        country: "",
-        description: "",
-        temperature: "",
-        error: "Please Type A City And Country",
-      });
-    }
-  }
+
+      await fetch(
+        `${REACT_APP_API_URL}/weather/?lat=${lat}&lon=${long}&units=metric&APPID=${REACT_APP_API_KEY}`
+      )
+        .then((res) => res.json())
+        .then((result) => {
+          setData(result);
+          console.log(result);
+        });
+    };
+
+    fetchData();
+  }, [lat, long]);
 
   return (
     <div className="App">
-      <h3>WEATHER APP</h3>
-      <Input getWeather={fetchData} />
-      <WeatherData
-        city={weather.city}
-        country={weather.country}
-        description={weather.description}
-        temperature={weather.temperature}
-        error={weather.error}
-      />
-      {console.log(weather.data)}
+      {typeof data.main != "undefined" ? (
+        <Weather weatherData={data} />
+      ) : (
+        <div>Loading...</div>
+      )}
     </div>
   );
 }
-
-export default App;
