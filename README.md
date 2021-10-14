@@ -1,3 +1,22 @@
+# Little Weather App
+
+Just a little weather app for react hook practice :)
+
+        __I__
+   .-'"  .  "'-.
+ .'  / . ' . \  '.
+/_.-..-..-..-..-._\ 
+         #  _,,_   
+         #/`    `\ 
+         / / 6 6\ \
+         \/\  Y /\/       /\-/\
+         #/ `'U` \       /a a  \               _
+       , (  \   | \     =\ Y  =/-~~~~~~-,_____/ )
+       |\|\_/#  \_/       '^--'          ______/
+       \/'.  \  /'\         \           /
+        \    /=\  /         ||  |---'\  \
+        /____)/____)       (_(__|   ((__|
+
 ## Available Scripts
 
 In the project directory, you can run:
