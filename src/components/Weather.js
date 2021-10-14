@@ -2,8 +2,10 @@ import React from "react";
 import "../App.css";
 
 const Weather = ({ weatherData }) => {
-  //   const desc = weatherData.weather[0].main;
-  const desc = "Smoke";
+  const desc = weatherData.weather[0].main;
+
+  // Uncomment for hellscape:
+  // const desc = "Smoke";
   const imgUrl = `weather/${desc}.gif`;
   return (
     <div
