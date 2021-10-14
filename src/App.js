@@ -21,7 +21,7 @@ export default function App() {
         .then((res) => res.json())
         .then((result) => {
           setData(result);
-          console.log("WEATHER --> ", result);
+          // console.log("WEATHER --> ", result);
         });
     };
 
